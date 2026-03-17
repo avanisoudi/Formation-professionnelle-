@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formation Bot WhatsApp</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: white;
+            padding: 40px 20px;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .main-content {
+            background-color: white;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+        .product-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .product-image {
+            background-color: #e9f7f2;
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+        }
+        .product-image .badge {
+            background-color: #25D366;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        .product-image .file-info {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            width: 80%;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .product-image .file-info .file-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .product-image .file-info .file-size {
+            color: #666;
+            font-size: 0.9em;
+        }
+        .product-image .preview-link {
+            color: #128C7E;
+            text-decoration: none;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        .product-details {
+            padding: 20px;
+        }
+        .product-details h2 {
+            color: #128C7E;
+            margin-top: 0;
+        }
+        .product-details .price {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #333;
+            margin: 20px 0;
+        }
+        .product-details .price small {
+            font-size: 0.5em;
+            font-weight: normal;
+            color: #666;
+        }
+        .features-list {
+            list-style: none;
+            padding: 0;
+        }
+        .features-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .features-list li:before {
+            content: "✓";
+            color: #25D366;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .payment-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .payment-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .payment-method {
+            background-color: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .payment-method:hover {
+            border-color: #25D366;
+        }
+        .payment-method.selected {
+            border-color: #25D366;
+            background-color: #e8f5e9;
+        }
+        .payment-method.orange-money {
+            background-color: #ff6b00;
+            color: white;
+            border: none;
+        }
+        .payment-method.orange-money:hover {
+            background-color: #ff8c00;
+        }
+        .buy-button {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+        .buy-button:hover {
+            background-color: #128C7E;
+        }
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .secure-badge i {
+            color: #25D366;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        @media (max-width: 768px) {
+            .product-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Formation Bot WhatsApp</h1>
+            <p>Maîtrisez la création de bots WhatsApp professionnels</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="product-section">
+                <div class="product-image">
+                    <span class="badge">Populaire</span>
+                    <div class="file-info">
+                        <div class="file-name">Whatsapp Bot Formation</div>
+                        <div class="file-size">25.5 MB</div>
+                        <a href="#" class="preview-link">Aperçu disponible</a>
+                    </div>
+                </div>
+                
+                <div class="product-details">
+                    <h2>Formation complète et téléchargeable</h2>
+                    <p>Découvrez la Formation Bot WhatsApp, un programme complet dédié à la création de bots WhatsApp. Cette formation téléchargeable vous guide pas à pas dans l'apprentissage du codage spécifique aux bots conçus pour l'une des plateformes de messagerie les plus populaires au monde.</p>
+                    
+                    <div class="price">
+                        3000 <small>F CFA</small>
+                    </div>
+                    
+                    <h3>Au cours de cette formation, vous apprendrez :</h3>
+                    <ul class="features-list">
+                        <li>Les fondamentaux du développement de bots adaptés à WhatsApp</li>
+                        <li>Comment automatiser la gestion de conversations et interactions</li>
+                        <li>Les meilleures pratiques pour optimiser l'expérience utilisateur</li>
+                        <li>Les outils et langages de programmation essentiels au codage des bots</li>
+                        <li>Comment déployer et maintenir un bot opérationnel sur WhatsApp</li>
+                    </ul>
+                    
+                    <p><small>La Formation Bot WhatsApp s'adresse aux passionnés de technologie, développeurs débutants ou expérimentés, ainsi qu'aux professionnels souhaitant maîtriser ces technologies. Accessible en téléchargement, elle vous permet d'apprendre à votre rythme, où que vous soyez.</small></p>
+                </div>
+            </div>
+            
+            <div class="payment-section">
+                <h3>PAIEMENT SÉCURISÉ</h3>
+                <p>Vos données sont protégées et chiffrées. Paiement via Orange Money accepté dans toute l'Afrique.</p>
+                
+                <div class="payment-methods">
+                    <div class="payment-method orange-money selected">
+                        <span>🟠 Orange Money</span>
+                    </div>
+                    <div class="payment-method">
+                        <span>Autres (bientôt)</span>
+                    </div>
+                </div>
+                
+                <button class="buy-button" onclick="window.location.href='https://formabot-jd4awf5w.manus.space/checkout/prd_wabot001'">
+                    Acheter maintenant
+                </button>
+                
+                <div class="secure-badge">
+                    <i>🔒</i>
+                    <span>Paiement 100% sécurisé - Transaction cryptée</span>
+                </div>
+            </div>
+            
+            <footer>
+                <p>© 2024 AVANI Tech - Formation Bot WhatsApp. Tous droits réservés.</p>
+            </footer>
+        </div>
+    </div>
+</body>
+</html>
