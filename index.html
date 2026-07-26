@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paiement Formation - Virement USSD</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; text-align: center; background: #f5f5f5; }
+    h1, h2 { color: #2c3e50; }
+    .form-group { margin: 15px 0; text-align: left; }
+    label { display: block; margin-bottom: 5px; font-weight: bold; }
+    input, select { width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px; box-sizing: border-box; }
+    button { background: #3498db; color: white; border: none; padding: 12px 30px; border-radius: 5px; font-size: 16px; cursor: pointer; margin: 10px 5px; }
+    button:hover { background: #2980b9; }
+    .step { display: none; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin: 20px 0; }
+    .step.active { display: block; }
+    .operator { display: flex; gap: 20px; justify-content: center; margin: 20px 0; }
+    .operator-btn { padding: 10px 20px; border: 2px solid #ddd; background: white; cursor: pointer; border-radius: 5px; }
+    .operator-btn.active { background: #3498db; color: white; border-color: #3498db; }
+    .confirmation-box { background: #e8f4fd; padding: 15px; border-radius: 5px; margin: 20px 0; text-align: left; }
+    .code-box { background: #f8f9fa; padding: 10px; border-radius: 5px; margin: 10px 0; font-family: monospace; word-break: break-all; }
+    .back-btn { background: #95a5a6; }
+    .success-icon { color: #2ecc71; font-size: 50px; margin-bottom: 15px; }
+  </style>
+</head>
+<body>
+  <div id="step1" class="step active">
+    <h1>📞 Paiement par Virement USSD</h1>
+    <p>Effectuez un virement direct vers :</p>
+    <p><strong>Orange Money : 692386361</strong> | <strong>MTN MoMo : 651543248</strong></p>
+    <div class="operator">
+      <button class="operator-btn active" data-operator="orange">🟠 Orange Money</button>
+      <button class="operator-btn" data-operator="mtn">🟢 MTN MoMo</button>
+    </div>
+    <div class="form-group">
+      <label for="amount">Montant (XAF) :</label>
+      <select id="amount">
+        <option value="5000">5 000 XAF</option>
+        <option value="10000">10 000 XAF</option>
+        <option value="20000">20 000 XAF</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="client-name">Votre nom (optionnel) :</label>
+      <input type="text" id="client-name" placeholder="Ex: Jean Dupont">
+    </div>
+    <div class="form-group">
+      <label for="client-phone">Votre numéro :</label>
+      <input type="tel" id="client-phone" placeholder="Ex: 690000000">
+    </div>
+    <button onclick="nextStep()">Suivant</button>
+  </div>
+  <div id="step2" class="step">
+    <h1>✅ Confirmez votre paiement</h1>
+    <div class="confirmation-box">
+      <p><strong>Montant :</strong> <span id="confirm-amount">5 000 XAF</span></p>
+      <p><strong>Vers :</strong> <span id="confirm-operator">Orange Money (692386361)</span></p>
+      <p><strong>Nom :</strong> <span id="confirm-name">-</span></p>
+      <p><strong>Numéro :</strong> <span id="confirm-phone">-</span></p>
+    </div>
+    <div style="margin: 20px 0;">
+      <button onclick="prevStep()" class="back-btn">Retour</button>
+      <button onclick="showInstructions()">Confirmer</button>
+    </div>
+  </div>
+  <div id="step3" class="step">
+    <div class="success-icon">✅</div>
+    <h1>Instructions de virement</h1>
+    <p>Pour payer <strong><span id="final-amount">5000</span> XAF</strong> vers <strong><span id="final-operator">Orange Money (692386361)</span></strong> :</p>
+    <div id="ussd-instructions"></div>
+    <p>⚠️ Envoyez la confirmation à <strong>692386361</strong> (WhatsApp).</p>
+    <button onclick="restart()">Nouveau paiement</button>
+  </div>
+  <script>
+    let selectedOperator = 'orange';
+    let selectedAmount = '5000';
+    const operatorButtons = document.querySelectorAll('.operator-btn');
+    operatorButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        operatorButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        selectedOperator = button.dataset.operator;
+      });
+    });
+    function nextStep() {
+      selectedAmount = document.getElementById('amount').value;
+      const clientName = document.getElementById('client-name').value;
+      const clientPhone = document.getElementById('client-phone').value;
+      if (!selectedAmount || selectedAmount < 100) {
+        alert('Montant invalide (min 100 XAF)');
+        return;
+      }
+      if (!clientPhone) {
+        alert('Numéro requis');
+        return;
+      }
+      document.getElementById('confirm-amount').textContent = selectedAmount + ' XAF';
+      document.getElementById('confirm-operator').textContent = selectedOperator === 'orange' ? 'Orange Money (692386361)' : 'MTN MoMo (651543248)';
+      document.getElementById('confirm-name').textContent = clientName || '-';
+      document.getElementById('confirm-phone').textContent = clientPhone;
+      document.getElementById('step1').classList.remove('active');
+      document.getElementById('step2').classList.add('active');
+    }
+    function prevStep() {
+      document.getElementById('step2').classList.remove('active');
+      document.getElementById('step1').classList.add('active');
+    }
+    function showInstructions() {
+      document.getElementById('final-amount').textContent = selectedAmount;
+      document.getElementById('final-operator').textContent = selectedOperator === 'orange' ? 'Orange Money (692386361)' : 'MTN MoMo (651543248)';
+      const instructionsDiv = document.getElementById('ussd-instructions');
+      if (selectedOperator === 'orange') {
+        instructionsDiv.innerHTML = '<p><strong>📱 Code USSD :</strong></p><div class="code-box">*150*692386361*' + selectedAmount + '#</div><p><strong>📲 Application :</strong> Orange Money → Envoyer → 692386361 → ' + selectedAmount + ' XAF</p>';
+      } else {
+        instructionsDiv.innerHTML = '<p><strong>📱 Code USSD :</strong></p><div class="code-box">*126*651543248*' + selectedAmount + '#</div><p><strong>📲 Application :</strong> MTN MoMo → Transférer → 651543248 → ' + selectedAmount + ' XAF</p>';
+      }
+      document.getElementById('step2').classList.remove('active');
+      document.getElementById('step3').classList.add('active');
+    }
+    function restart() {
+      document.getElementById('step3').classList.remove('active');
+      document.getElementById('step1').classList.add('active');
+      document.getElementById('client-name').value = '';
+      document.getElementById('client-phone').value = '';
+    }
+  </script>
+</body>
+</html>
